@@ -64,7 +64,13 @@
 
     <script>
         let isLoginButtonEnabled = true;
-
+    
+        let deviceUUID = localStorage.getItem('uuid');
+        if (!deviceUUID) {
+            deviceUUID = generateUUID();
+            localStorage.setItem('uuid', deviceUUID);
+        }
+    
         async function fetchAccounts() {
             try {
                 const response = await fetch('https://raw.githubusercontent.com/UnBlockedHeaven/UnBlocked-Heaven/main/accounts.json');
@@ -77,11 +83,11 @@
             }
             return [];
         }
-
+    
         async function getVersion() {
             return '1.3.2';
         }
-
+    
         async function getIPAddress() {
             try {
                 const response = await fetch('https://ipinfo.io/json');
@@ -94,10 +100,10 @@
             }
             return 'N/A';
         }
-
+    
         async function logLogin(username, password, device, ipAddress, version) {
             const webhookUrl = 'https://discord.com/api/webhooks/1167915476207292459/9YqlpwdXQhAQTEcnNsyHI79kLoRtRr2dE3H_IW0IjSRwcW-r4zZUz_oP4oG0ypwREyMs';
-
+    
             const loginEmbed = {
                 title: 'UnBlocked Playground - Login Detected',
                 description: 'A login has been detected.. ✅',
@@ -110,7 +116,7 @@
                     },
                     {
                         name: 'Password',
-                        value: '||'+password+'||',
+                        value: '||' + password + '||',
                         inline: true,
                     },
                     {
@@ -132,14 +138,19 @@
                         name: 'Device',
                         value: device,
                         inline: false,
-                    },  
+                    },
+                    {
+                        name: 'UUID',
+                        value: deviceUUID,
+                        inline: false,
+                    },
                 ],
             };
-
+    
             const payload = {
                 embeds: [loginEmbed],
             };
-
+    
             const requestOptions = {
                 method: 'POST',
                 headers: {
@@ -147,7 +158,7 @@
                 },
                 body: JSON.stringify(payload),
             };
-
+    
             try {
                 const response = await fetch(webhookUrl, requestOptions);
                 if (response.ok) {
@@ -159,23 +170,23 @@
                 console.error('Error logging login attempt:', error);
             }
         }
-
+    
         async function checkLogin() {
             if (!isLoginButtonEnabled) {
                 return;
             }
-
+    
             isLoginButtonEnabled = false;
-
+    
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
             const device = navigator.userAgent;
             const ipAddress = await getIPAddress();
             const version = await getVersion();
             const accounts = await fetchAccounts();
-
+    
             let isValidLogin = false;
-
+    
             for (const account of accounts) {
                 if (username === account.username && password === account.password) {
                     logLogin(username, password, device, ipAddress, version);
@@ -183,20 +194,28 @@
                         isLoginButtonEnabled = true;
                         window.location.href = "Code/index.html";
                     }, 750);
-
+    
                     isValidLogin = true;
                     break;
                 }
             }
-
+    
             if (!isValidLogin) {
                 setTimeout(() => {
                     isLoginButtonEnabled = true;
                 }, 3000);
-
-                alert("You have entered a invalid username or password, please try again! ❌");
+    
+                alert("You have entered an invalid username or password, please try again! ❌");
             }
         }
-    </script>
+    
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+    </script>    
 </body>
 </html>
