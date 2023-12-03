@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google</title>
+    <link rel="icon" type="image/x-icon" href="../Images/favicon.ico">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        .top-bar {
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            z-index: 1;
+        }
+        .top-bar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 18px;
+        }
+        .top-bar a:hover {
+            text-decoration: underline;
+        }
+        iframe {
+            width: 100%;
+            height: calc(100vh - 40px);
+            border: none;
+            position: absolute;
+            top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+    </div>
+    <iframe src="https://shellshockers.xypheria.repl.co/"></iframe>
+</body>
+</html>
